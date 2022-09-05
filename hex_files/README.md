@@ -43,10 +43,10 @@
         send packet size = 1
 
     @received interrupt correctly  test pass
-        send packet size = 9
+        send packet size = 5
 
     @ timeout                       test fail
-        send packet size = 5
+        send packet size = 9
 
     @ end test 
         send packet size = 3
