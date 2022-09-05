@@ -108,10 +108,11 @@
     @after bitbang 
         send packet size = 2
     @ sending each pulse at gpio[7:0] 
-        send packet size = 3  # betweeb each 2 3-packet size gpio[7:0] should be monitored
+        send packet size = 5  # betweeb each 2 3-packet size gpio[7:0] should be monitored
     @ finish test 
-        send packet size = 9 
-        send packet size = 9 
+        send packet size = 3 
+        send packet size = 3 
+        send packet size = 3 
 ### Following patterns should seen at gpio[7:0]
     gpio_7: 10 10 10 10 10 10 10 10 
     gpio_6: 00 10 10 10 10 10 10 10 
@@ -129,14 +130,15 @@
     @after bitbang 
         send packet size = 2
     @ waiting for pattern new pattern
-        send packet size = 3  
+        send packet size = 5  
     @ found pattern 
-        send packet size = 4  
+        send packet size = 7  
     @ can't find pattern timeout 
-        send packet size = 7
+        send packet size = 9
     @ finish test 
-        send packet size = 9 
-        send packet size = 9 
+        send packet size = 3 
+        send packet size = 3 
+        send packet size = 3 
 
 ### Following patterns should sent to gpio[7:0]
     0xAA 
@@ -152,10 +154,11 @@
     @after bitbang 
         send packet size = 2
     @ sending each pulse at gpio[37:30] 
-        send packet size = 3  # betweeb each 2 3-packet size gpio[37:30] should be monitored
+        send packet size = 7  # betweeb each 2 3-packet size gpio[37:30] should be monitored
     @ finish test 
-        send packet size = 9 
-        send packet size = 9 
+        send packet size = 3 
+        send packet size = 3 
+        send packet size = 3 
 ### Following patterns should seen at gpio[7:0]
     gpio_37: 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
     gpio_36: 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
@@ -174,14 +177,15 @@
     @after bitbang 
         send packet size = 2
     @ waiting for pattern new pattern
-        send packet size = 3  
+        send packet size = 5  
     @ found pattern 
-        send packet size = 4  
+        send packet size = 7  
     @ can't find pattern timeout 
-        send packet size = 7
-    @ finish test 
-        send packet size = 9 
         send packet size = 9
+    @ finish test 
+        send packet size = 3 
+        send packet size = 3
+        send packet size = 3
 
 ### Following patterns should sent to gpio[37:30]
     0xAA 
@@ -195,10 +199,10 @@
         send packet size = 1
 
     @received interrupt correctly  test pass
-        send packet size = 9
+        send packet size = 5
 
     @ timeout                       test fail
-        send packet size = 5
+        send packet size = 9
 
     @ end test 
         send packet size = 3
@@ -236,7 +240,7 @@
         send packet with size = 2
 
     @End of transmitting
-        send packet with size = 9
+        send packet with size = 5
 
     @ finish test 
         send packet with size = 3
