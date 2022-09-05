@@ -103,3 +103,168 @@
         send packet size = 3
         send packet size = 3
         send packet size = 3
+
+## cpu_bitbang_left7
+### gpio[7:0] used as output 
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 2
+    @ sending each pulse at gpio[7:0] 
+        send packet size = 3  # betweeb each 2 3-packet size gpio[7:0] should be monitored
+    @ finish test 
+        send packet size = 9 
+        send packet size = 9 
+### Following patterns should seen at gpio[7:0]
+    gpio_7: 10 10 10 10 10 10 10 10 
+    gpio_6: 00 10 10 10 10 10 10 10 
+    gpio_5: 00 00 10 10 10 10 10 10 
+    gpio_4: 00 00 00 10 10 10 10 10 
+    gpio_3: 00 00 00 00 10 10 10 10 
+    gpio_2: 00 00 00 00 00 10 10 10 
+    gpio_1: 00 00 00 00 00 00 10 10
+    gpio_0: 00 00 00 00 00 00 00 10 
+
+## cpu_bitbang_left7_i
+### gpio[7:0] used as input 
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 2
+    @ waiting for pattern new pattern
+        send packet size = 3  
+    @ found pattern 
+        send packet size = 4  
+    @ can't find pattern timeout 
+        send packet size = 7
+    @ finish test 
+        send packet size = 9 
+        send packet size = 9 
+
+### Following patterns should sent to gpio[7:0]
+    0xAA 
+    0x55  
+    0xFF 
+    0x00
+
+
+## cpu_bitbang_right8
+### gpio[37:30] used as output 
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 2
+    @ sending each pulse at gpio[37:30] 
+        send packet size = 3  # betweeb each 2 3-packet size gpio[37:30] should be monitored
+    @ finish test 
+        send packet size = 9 
+        send packet size = 9 
+### Following patterns should seen at gpio[7:0]
+    gpio_37: 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+    gpio_36: 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+    gpio_35: 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+    gpio_34: 00 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+    gpio_33: 00 00 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+    gpio_32: 00 00 00 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+    gpio_31: 00 00 00 00 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+    gpio_30: 00 00 00 00 00 00 00 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 
+
+
+## cpu_bitbang_right8_i
+### gpio[37:30] used as input 
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 2
+    @ waiting for pattern new pattern
+        send packet size = 3  
+    @ found pattern 
+        send packet size = 4  
+    @ can't find pattern timeout 
+        send packet size = 7
+    @ finish test 
+        send packet size = 9 
+        send packet size = 9
+
+### Following patterns should sent to gpio[37:30]
+    0xAA 
+    0x55  
+    0xFF 
+    0x00
+
+## IRQ_external
+### mprj[7] used as input and need to be asserted 
+    @wait for environment to make mprj[7] high
+        send packet size = 1
+
+    @received interrupt correctly  test pass
+        send packet size = 9
+
+    @ timeout                       test fail
+        send packet size = 5
+
+    @ end test 
+        send packet size = 3
+        send packet size = 3
+        send packet size = 3
+**NOTE** housekeeping SPI should used to update register irq_1_inputsrc to 1 see verilog code
+ 
+## spi_master
+### external memory should be used like the flash mem
+    @ enabling SPi 
+        send packet with size = 1
+
+    @ read correct value 
+        send packet with size = 5
+
+    @ read wrong value 
+
+        send packet with size = 9 
+
+    @ finish test
+    send packet with size = 3
+    send packet with size = 3
+    send packet with size = 3
+**NOTE** csb=mprj_io[33], clk=mprj_io[32], io0=mprj_io[35], io1=mprj_io[34]
+### external memory should have 
+    @00000000
+    6F 00 00 0B 93 01 00 00 13 02 63 57 b5 00 23 20
+    13 00 00 00 13 00 00 00 13 00 00 00 13 00 00 00 
+
+## uart
+### SER_TX mprj[6] used as output 
+**NOTE** python code should get all the data received on SER_TX and decode it code like the on at vip/tbuart.v
+    
+    @Start of transmitting 
+        send packet with size = 2
+
+    @End of transmitting
+        send packet with size = 9
+
+    @ finish test 
+        send packet with size = 3
+        send packet with size = 3
+        send packet with size = 3
+
+## uart_loopback
+### SER_TX mprj[6] and SER_RX mprj[5] should be connected
+
+    @Start of the test 
+        send packet with size = 1
+
+    @sent new character  
+        send packet with size = 4
+>Transmit any character and wait until receiev it back
+
+    @recieved the correct character 
+        send packet with size = 6
+
+    @timeout didn't recieve the character 
+        send packet with size = 9
+
+    @ finish test 
+        send packet with size = 3
+        send packet with size = 3
+        send packet with size = 3
+
+ 
