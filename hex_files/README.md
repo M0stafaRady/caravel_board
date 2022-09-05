@@ -58,9 +58,6 @@
     @configuring the timers and start count down 
         send packet size = 1
 
-    @timer  updated correctly 
-        send packet size = 5
-
     @timer reach 0
         send packet size = 7
 
