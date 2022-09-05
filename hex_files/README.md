@@ -59,7 +59,7 @@
         send packet size = 1
 
     @timer reach 0
-        send packet size = 7
+        send packet size = 5
 
     @ timer updated incorrectly
         send packet size = 9
