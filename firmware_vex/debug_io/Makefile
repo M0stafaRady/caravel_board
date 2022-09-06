@@ -1,5 +1,5 @@
 
-TOOLCHAIN_PATH=/usr/local/bin/
+TOOLCHAIN_PATH=/ciic/tools/rv32/bin/
 #TOOLCHAIN_PATH=/opt/riscv32imc/bin/
 # TOOLCHAIN_PATH=/ef/apps/bin/
 
@@ -20,14 +20,15 @@ hex:  ${PATTERN:=.hex}
 	cd ../gpio_config; python3 ../gpio_config/gpio_config_builder.py
 
 %.elf: %.c ../sections.lds ../crt0_vex.S ../gpio_config/gpio_config_data.c
-	#$(TOOLCHAIN_PATH)riscv32-unknown-elf-gcc -O0 -march=rv32i -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s ../print_io.c $<
-	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-unknown-elf-gcc -I../ -I../generated/ -O0 -mabi=ilp32 -march=rv32i -D__vexriscv__ -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../crt0_vex.S ../isr.c ../gpio_program.c $<
-	${TOOLCHAIN_PATH}$(TOOLCHAIN_PREFIX)-unknown-elf-objdump -D debug_io.elf > debug_io.lst
+	$(TOOLCHAIN_PATH)riscv32-unknown-linux-gnu-gcc -I../ -I../generated/ -O0 -mabi=ilp32 -march=rv32i -D__vexriscv__ -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../crt0_vex.S ../isr.c ../gpio_program.c $<
+
+	#$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-unknown-elf-gcc -I../ -I../generated/ -O0 -mabi=ilp32 -march=rv32i -D__vexriscv__ -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../crt0_vex.S ../isr.c ../gpio_program.c $<
+	#${TOOLCHAIN_PATH}$(TOOLCHAIN_PREFIX)-unknown-elf-objdump -D debug_io.elf > debug_io.lst
 
 %.hex: %.elf
-	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-unknown-elf-objcopy -O verilog $< $@
-	sed -i '.orig' -e 's/@1000/@0000/g' $@
-
+	$(TOOLCHAIN_PATH)riscv32-unknown-linux-gnu-objcopy -O verilog $< $@
+	sed -ie 's/@10/@00/g' $@
+	
 %.bin: %.elf
 	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-unknown-elf-objcopy -O binary $< $@
 
