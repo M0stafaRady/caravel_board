@@ -269,3 +269,20 @@
         send packet with size = 3
 
  
+## cpu_bitbang_#_o
+### connect the # gpio as output
+
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 1
+    @ start sending 10 pulses at gpio[#] 
+        send packet size = 5 
+    @ stop sending pulses at gpio[#] 
+        send packet size = 7
+    @ finish test 
+        send packet size = 3 
+        send packet size = 3 
+        send packet size = 3 
+
+ 
