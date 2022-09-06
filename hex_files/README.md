@@ -286,3 +286,27 @@
         send packet size = 3 
 
  
+ 
+## cpu_bitbang_#_i
+### connect the # gpio as input
+
+    @ before bit bang
+        send packet size = 1 
+    @after bitbang 
+        send packet size = 2
+    @ wait for high input 
+        send packet size = 5 
+    @ wait for low input 
+        send packet size = 7
+    @ wait for high input 
+        send packet size = 5 
+    @ wait for low input 
+        send packet size = 7
+    @ can't find input timeout
+        send packet size = 9
+    @ finish test 
+        send packet size = 3 
+        send packet size = 3 
+        send packet size = 3 
+
+ 
