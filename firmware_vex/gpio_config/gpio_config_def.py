@@ -84,16 +84,16 @@ C_USER_IN_NOPULL = 7
 C_USER_OUT = 8
 
 config_h = [
-    C_USER_BIDIR_WPD,  #37
-    C_USER_BIDIR_WPD,
+    C_MGMT_OUT,  #37
     C_MGMT_OUT,
     C_MGMT_OUT,
     C_MGMT_OUT,
-    C_USER_OUT,
-    C_USER_OUT,
-    C_USER_OUT,  #30
-    C_USER_OUT,
-    C_USER_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,  #30
+    C_MGMT_OUT,
+    C_MGMT_OUT,
     C_MGMT_OUT,  #27
     C_MGMT_OUT,
     C_MGMT_OUT,
@@ -108,25 +108,25 @@ config_h = [
 del config_h[NUM_IO:]
 
 config_l = [
-    C_DISABLE,
-    C_MGMT_OUT,
-    C_MGMT_IN,
-    C_MGMT_IN,
-    C_MGMT_IN,
-    C_MGMT_IN,         #5
     C_MGMT_OUT,
     C_MGMT_OUT,
-    C_MGMT_IN,   #8
-    C_USER_BIDIR_WPD,   #9
-    C_USER_BIDIR_WPD,   #10
-    C_USER_BIDIR_WPD,   #11
-    C_USER_BIDIR_WPD,   #12
-    C_USER_BIDIR_WPD,   #13
-    C_USER_BIDIR_WPD,   #14
-    C_USER_BIDIR_WPD,   #15
-    C_USER_BIDIR,       #16
-    C_DISABLE,
-    C_DISABLE,
+    C_MGMT_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,         #5
+    C_MGMT_OUT,
+    C_MGMT_OUT,
+    C_MGMT_OUT,   #8
+    C_MGMT_OUT,   #9
+    C_MGMT_OUT,   #10
+    C_MGMT_OUT,   #11
+    C_MGMT_OUT,   #12
+    C_MGMT_OUT,   #13
+    C_MGMT_OUT,   #14
+    C_MGMT_OUT,   #15
+    C_MGMT_OUT,       #16
+    C_MGMT_OUT,
+    C_MGMT_OUT,
 ]
 
 del config_l[NUM_IO:]
