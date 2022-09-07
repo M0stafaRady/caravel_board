@@ -74,28 +74,6 @@ void set_registers() {
 @ send 4 pulses at gpio[7]  
     send packet with size = 9
 
-@ start sending on the higest gpios 
-    send packet with size = 1
-@ send 4 pulses at gpio[37]  
-    send packet with size = 2
-@ send 4 pulses at gpio[36]  
-    send packet with size = 3
-@ send 4 pulses at gpio[35]  
-    send packet with size = 4
-@ send 4 pulses at gpio[34]  
-    send packet with size = 5
-@ send 4 pulses at gpio[33]  
-    send packet with size = 6
-@ send 4 pulses at gpio[32]  
-    send packet with size = 7
-@ send 4 pulses at gpio[31]  
-    send packet with size = 8
-@ send 4 pulses at gpio[30]  
-    send packet with size = 9
-@ test finish 
-    send packet with size = 7
-    send packet with size = 7
-    send packet with size = 7
 
 */
 void main()
@@ -112,17 +90,6 @@ void main()
 
     for (j=0;j<num_bits;j++){
         send_packet(j+2); // send 4 pulses at gpio[j]
-        for (i = 0; i < num_pulses; i++){
-            reg_mprj_datal = 0x1 << j;
-            count_down(PULSE_WIDTH);  
-            reg_mprj_datal = 0x0;  
-            count_down(PULSE_WIDTH);  
-        }
-    }
-
-    send_packet(1); //start sending on the higest gpios
-    for (j=37;j > 37-num_bits;j--){
-        send_packet(37-j+2); // send 4 pulses at gpio[j]
         for (i = 0; i < num_pulses; i++){
             reg_mprj_datal = 0x1 << j;
             count_down(PULSE_WIDTH);  
