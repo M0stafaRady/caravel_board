@@ -28,11 +28,21 @@ def arg_pars():
     parser.add_argument('-gpio_h','-hi', help='provide gpio_h array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
     parser.add_argument('-gpio_l','-l', help='provide gpio_l array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
     parser.add_argument('-num_io','-n', type=int, help='number of ios to work with')
+    parser.add_argument('-config','-c', help='configuration types for now all gpios have the same gpio config C_MGMT_OUT C_MGMT_IN')
     args = parser.parse_args()
-    if any(v is  None for v in [args.gpio_h, args.gpio_l,args.num_io]):
-        print("fatal: you have to provide both -gpio_h and -gpio_l")
+    if any(v is  None for v in [args.gpio_h, args.gpio_l,args.num_io,args.config]):
+        print("fatal: you have to provide both -gpio_h and -gpio_l -args.num_io -args.config")
         sys.exit()
     NUM_IO = args.num_io
+    if args.config == "C_MGMT_OUT":
+        config_l = [C_MGMT_OUT] *19
+        config_h = [C_MGMT_OUT] *19
+    elif args.config == "C_MGMT_IN":
+        config_l = [C_MGMT_OUT] *19
+        config_h = [C_MGMT_OUT] *19
+    else: 
+        print ("Fatal: incorrect -config value it has to be C_MGMT_OUT or C_MGMT_IN")
+        sys.exit()
     gpio_h=list()
     gpio_l=list()
     arg_gpio_h = args.gpio_h
