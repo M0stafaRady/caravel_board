@@ -94,11 +94,20 @@ void main()
     send_packet(1); //start sending on the higest gpios
     for (j=37;j > 37-num_bits;j--){
         send_packet(37-j+2); // send 4 pulses at gpio[j]
-        for (i = 0; i < num_pulses; i++){
-            reg_mprj_datal = 0x1 << j;
-            count_down(PULSE_WIDTH);  
-            reg_mprj_datal = 0x0;  
-            count_down(PULSE_WIDTH);  
+        if (j>=32){
+            for (i = 0; i < num_pulses; i++){
+                reg_mprj_datah = 0x1 << j-32;
+                count_down(PULSE_WIDTH);  
+                reg_mprj_datah = 0x0;  
+                count_down(PULSE_WIDTH);  
+            }
+        }else{
+            for (i = 0; i < num_pulses; i++){
+                reg_mprj_datal = 0x1 << j;
+                count_down(PULSE_WIDTH);  
+                reg_mprj_datal = 0x0;  
+                count_down(PULSE_WIDTH);  
+            }
         }
     }
 
