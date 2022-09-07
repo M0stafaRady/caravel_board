@@ -19,6 +19,51 @@ from enum import Enum
 from gpio_config_def import *
 
 # ------------------------------------------
+import argparse
+import sys
+
+
+def arg_pars():
+    parser = argparse.ArgumentParser(description='provide gpio types')
+    parser.add_argument('-gpio_h','-hi', help='provide gpio_h array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
+    parser.add_argument('-gpio_l','-l', help='provide gpio_l array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
+    parser.add_argument('-num_io','-n', type=int, help='number of ios to work with')
+    args = parser.parse_args()
+    if any(v is  None for v in [args.gpio_h, args.gpio_l,args.num_io]):
+        print("fatal: you have to provide both -gpio_h and -gpio_l")
+        sys.exit()
+    NUM_IO = args.num_io
+    gpio_h=list()
+    gpio_l=list()
+    arg_gpio_h = args.gpio_h
+    arg_gpio_h = arg_gpio_h.replace('[','').replace(']','')
+    arg_gpio_h = arg_gpio_h.split(',')
+    for i,violation in enumerate(arg_gpio_h):
+        if violation == 'H_NONE': violation_type = H_NONE
+        elif violation == 'H_INDEPENDENT': violation_type = H_INDEPENDENT
+        elif violation == 'H_DEPENDENT': violation_type = H_DEPENDENT
+        else : 
+            print (f"incorrect violation type inside provided argument gpio_h {args.gpio_h} it has to be H_NONE or H_INDEPENDENT or H_DEPENDENT")
+            sys.exit()
+        gpio_h.append([f'IO[{37-i}]',violation_type])
+    print(f"gpio_h{gpio_h}")
+    del gpio_h[args.num_io:]
+    print(f"gpio_h{gpio_h}")
+    arg_gpio_l = args.gpio_l
+    arg_gpio_l = arg_gpio_l.replace('[','').replace(']','')
+    arg_gpio_l = arg_gpio_l.split(',')
+    # python gpio_config_builder.py -gpio_h [H_NONE,H_DEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT]  -gpio_l [H_NONE,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_DEPENDENT,H_DEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT,H_INDEPENDENT] -n 8
+    for i,violation in enumerate(arg_gpio_l):
+        if violation == 'H_NONE': violation_type = H_NONE
+        elif violation == 'H_INDEPENDENT': violation_type = H_INDEPENDENT
+        elif violation == 'H_DEPENDENT': violation_type = H_DEPENDENT
+        else : 
+            print (f"incorrect violation type inside provided argument gpio_l {args.gpio_l} it has to be H_NONE or H_INDEPENDENT or H_DEPENDENT")
+            sys.exit()
+        gpio_l.append([f'IO[{37-i}]',violation_type])
+    del gpio_l[args.num_io:]
+    print(args.gpio_h)
+
 
 
 stream_h = BitStream()
@@ -110,7 +155,7 @@ def correct_dd_holds(stream, bpos):
 
 # ------------------------------------------
 clock = 1
-
+arg_pars()
 # iterate through each IO in reverse order (e.g. IO[30] to IO[37])
 for k in reversed(range(NUM_IO)):
 
