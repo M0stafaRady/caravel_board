@@ -55,6 +55,24 @@ void set_registers() {
 }
 /*
 
+@ start of test  after configuration
+    send packet with size = 1
+@ send 4 pulses at gpio[0]  
+    send packet with size = 2
+@ send 4 pulses at gpio[1]  
+    send packet with size = 3
+@ send 4 pulses at gpio[2]  
+    send packet with size = 4
+@ send 4 pulses at gpio[3]  
+    send packet with size = 5
+@ send 4 pulses at gpio[4]  
+    send packet with size = 6
+@ send 4 pulses at gpio[5]  
+    send packet with size = 7
+@ send 4 pulses at gpio[6]  
+    send packet with size = 8
+@ send 4 pulses at gpio[7]  
+    send packet with size = 9
 
 @ start sending on the higest gpios 
     send packet with size = 1
@@ -90,6 +108,17 @@ void main()
     reg_mprj_datah = 0;
     reg_mprj_datal = 0;
     gpio_config_io();
+    send_packet(1); // configuration finished
+
+    for (j=0;j<num_bits;j++){
+        send_packet(j+2); // send 4 pulses at gpio[j]
+        for (i = 0; i < num_pulses; i++){
+            reg_mprj_datal = 0x1 << j;
+            count_down(PULSE_WIDTH);  
+            reg_mprj_datal = 0x0;  
+            count_down(PULSE_WIDTH);  
+        }
+    }
 
     send_packet(1); //start sending on the higest gpios
     for (j=37;j > 37-num_bits;j--){
@@ -101,6 +130,5 @@ void main()
             count_down(PULSE_WIDTH);  
         }
     }
-
 }
 
