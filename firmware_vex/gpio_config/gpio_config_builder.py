@@ -12,11 +12,10 @@ from bitstring import Bits, BitArray, BitStream
 from enum import Enum
 
 # import gpio and configuration definitions
-# from gpio_config_def import NUM_IO, C_MGMT_IN, C_MGMT_OUT, C_USER_BIDIR, C_DISABLE, C_ALL_ONES, \
-#                             H_DEPENDENT, H_INDEPENDENT, H_NONE, H_SPECIAL, config_h, config_l, gpio_h, gpio_l, \
-#                             C_USER_BIDIR_WPU, C_USER_BIDIR_WPD, C_USER_IN_NP, C_USER_OUT
+from gpio_config_def import NUM_IO, C_MGMT_IN, C_MGMT_OUT, C_USER_BIDIR, C_DISABLE, C_ALL_ONES, \
+                            H_DEPENDENT, H_INDEPENDENT, H_NONE, H_SPECIAL, config_h, config_l, gpio_h, gpio_l, \
+                            C_USER_BIDIR_WPU, C_USER_BIDIR_WPD, C_USER_IN_NP
 
-from gpio_config_def import *
 
 # ------------------------------------------
 import argparse
@@ -96,11 +95,8 @@ def build_stream_dependent(stream, config):
         stream.append('0b0100000000000')
     elif config == C_USER_BIDIR_WPD:
         stream.append('0b0110000000000')
-    elif config == C_USER_IN_NOPULL:
-        # stream.append('0b0010000000010')
-        stream.append('0b0010000000011')
-    elif config == C_USER_OUT:
-        stream.append('0b0110000000010')
+    elif config == C_USER_IN_NP:
+        stream.append('0b0010000000010')
     else:
         stream.append('0b1100000000000')
 
@@ -119,10 +115,8 @@ def build_stream_independent(stream, config):
         stream.append('0b010000000000')
     elif config == C_USER_BIDIR_WPD:
         stream.append('0b011000000000')
-    elif config == C_USER_IN_NOPULL:
+    elif config == C_USER_IN_NP:
         stream.append('0b001000000001')
-    elif config == C_USER_OUT:
-        stream.append('0b00110000000010')
     else:
         stream.append('0b110000000000')
 
@@ -141,10 +135,8 @@ def build_stream_none(stream, config):
         stream.append('0b0100000000000')
     elif config == C_USER_BIDIR_WPD:
         stream.append('0b0110000000000')
-    elif config == C_USER_IN_NOPULL:
+    elif config == C_USER_IN_NP:
         stream.append('0b0010000000010')
-    elif config == C_USER_OUT:
-        stream.append('0b0110000000010')
     else:
         stream.append('0b1100000000000')
 
@@ -165,6 +157,7 @@ def correct_dd_holds(stream, bpos):
 
 
 # ------------------------------------------
+
 clock = 1
 # iterate through each IO in reverse order (e.g. IO[30] to IO[37])
 for k in reversed(range(NUM_IO)):

@@ -41,7 +41,51 @@ void blink_long() {
     reg_gpio_out = 1; delay(wait); // OFF
 }
 
+void set_registers() {
 
+    reg_mprj_io_0 = GPIO_MODE_MGMT_STD_ANALOG;
+    reg_mprj_io_1 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_2 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_3 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_4 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_5 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_6 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_7 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_8 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_9 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_10 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_11 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_12 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_13 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_14 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_15 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_16 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_17 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_18 = GPIO_MODE_MGMT_STD_OUTPUT;
+
+    reg_mprj_io_19 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_20 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_21 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_22 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_23 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_24 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_25 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_26 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_27 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_28 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_29 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_30 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_31 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_32 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_33 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_34 = GPIO_MODE_MGMT_STD_OUTPUT;
+//    reg_mprj_io_34 = 0x0403;
+    reg_mprj_io_35 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_36 = GPIO_MODE_MGMT_STD_OUTPUT;
+    reg_mprj_io_37 = GPIO_MODE_MGMT_STD_OUTPUT;
+//    reg_mprj_io_37 = 0x0403;
+
+}
 /*
 	IO Test:
 		- Configures MPRJ lower 8-IO pins as outputs
@@ -67,8 +111,7 @@ void main()
 	*/
 
     // 1 input for input signal
-//	reg_mprj_io_8 =   GPIO_MODE_USER_STD_INPUT_NOPULL;
-	reg_mprj_io_8 =   GPIO_MODE_MGMT_STD_OUTPUT;
+	reg_mprj_io_8 =   GPIO_MODE_USER_STD_INPUT_NOPULL;
 
     // 7 outputs for segments, starting at 9
 	reg_mprj_io_9 =   GPIO_MODE_USER_STD_OUTPUT;
@@ -87,32 +130,20 @@ void main()
     // activate the project by setting the 1st bit of 2nd bank of LA
     reg_la1_iena = 0;
     reg_la1_oenb = 0;
-//    reg_la1_data = 1 << 1;
-    reg_la1_data = 0x02;
+    reg_la1_data = 1 << 1;
 
     // reset design with 0bit of 1st bank of LA
     reg_la0_iena = 0;
     reg_la0_oenb = 0;
     reg_la0_data = 1;
-    delay(3000000);
     reg_la0_data = 0;
-    delay(3000000);
 
     // no need for anything else as this design is free running.
 
     // load the correct clock frequency
     // la [1] load
     // la [13:2] new period
-//    reg_la0_data |= (3999 << 2) + (1 << 1);
-//    reg_la0_data = 0x12;
-//    reg_la0_data = 0;
-
-    while (1) {
-//        reg_mprj_datal = 0x00000100;
-//        delay(5);
-//        reg_mprj_datal = 0x00000000;
-//        delay(5);
-    }
+    reg_la0_data |= (3999 << 2) + (1 << 1);
 
 }
 
