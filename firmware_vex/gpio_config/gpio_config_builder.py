@@ -38,8 +38,8 @@ def arg_pars():
         config_l = [C_MGMT_OUT] *19
         config_h = [C_MGMT_OUT] *19
     elif args.config == "C_MGMT_IN":
-        config_l = [C_MGMT_OUT] *19
-        config_h = [C_MGMT_OUT] *19
+        config_l = [C_MGMT_IN] *19
+        config_h = [C_MGMT_IN] *19
     else: 
         print ("Fatal: incorrect -config value it has to be C_MGMT_OUT or C_MGMT_IN")
         sys.exit()
