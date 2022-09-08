@@ -102,7 +102,7 @@ void main()
 {
 	int i,j;
     int num_pulses = 4;
-    int num_bits = 8;
+    int num_bits = 19;
     configure_mgmt_gpio();
     set_registers();
     reg_mprj_datah = 0;
