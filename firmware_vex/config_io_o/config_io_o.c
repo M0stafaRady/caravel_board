@@ -110,7 +110,7 @@ void main()
     gpio_config_io();
     send_packet(1); // configuration finished
 
-    for (j=0;j<num_bits;j++){
+    for (j=0;j<13;j++){
         send_packet(j+2); // send 4 pulses at gpio[j]
         for (i = 0; i < num_pulses; i++){
             reg_mprj_datal = 0x1 << j;
@@ -121,7 +121,7 @@ void main()
     }
 
     send_packet(1); //start sending on the higest gpios
-    for (j=37;j > 37-num_bits;j--){
+    for (j=37;j > 21;j--){
         send_packet(37-j+2); // send 4 pulses at gpio[j]
         if (j>=32){
             for (i = 0; i < num_pulses; i++){
