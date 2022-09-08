@@ -73,6 +73,37 @@ void set_registers() {
     send packet with size = 8
 @ send 4 pulses at gpio[7]  
     send packet with size = 9
+@ send 4 pulses at gpio[8]  
+    send packet with size = 10
+
+
+@ reset pulses
+    send packet with size = 1
+@ send 4 pulses at gpio[9]  
+    send packet with size = 2
+@ send 4 pulses at gpio[10]  
+    send packet with size = 3
+@ send 4 pulses at gpio[11]  
+    send packet with size = 4
+@ send 4 pulses at gpio[12]  
+    send packet with size = 5
+@ send 4 pulses at gpio[13]  
+    send packet with size = 6
+@ send 4 pulses at gpio[14]  
+    send packet with size = 7
+@ send 4 pulses at gpio[15]  
+    send packet with size = 8
+@ send 4 pulses at gpio[16]  
+    send packet with size = 9
+@ send 4 pulses at gpio[17]  
+    send packet with size = 10
+@ send 4 pulses at gpio[18]  
+    send packet with size = 11
+
+@ test finish 
+    send packet with size = 7
+    send packet with size = 7
+    send packet with size = 7
 
 
 */
@@ -88,7 +119,7 @@ void main()
     gpio_config_io();
     send_packet(1); // configuration finished
 
-    for (j=0;j<num_bits;j++){
+    for (j=0;j<9;j++){
         send_packet(j+2); // send 4 pulses at gpio[j]
         for (i = 0; i < num_pulses; i++){
             reg_mprj_datal = 0x1 << j;
@@ -97,6 +128,18 @@ void main()
             count_down(PULSE_WIDTH);  
         }
     }
+
+    send_packet(1); // reset counter
+    for (j=9;j<19;j++){
+        send_packet(9-j+2); // send 4 pulses at gpio[j]
+        for (i = 0; i < num_pulses; i++){
+            reg_mprj_datal = 0x1 << j;
+            count_down(PULSE_WIDTH);  
+            reg_mprj_datal = 0x0;  
+            count_down(PULSE_WIDTH);  
+        }
+    }
+
 
 }
 

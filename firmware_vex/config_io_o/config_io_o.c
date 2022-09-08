@@ -74,6 +74,20 @@ void set_registers() {
 @ send 4 pulses at gpio[7]  
     send packet with size = 9
 
+@ reset pulses
+    send packet with size = 1
+@ send 4 pulses at gpio[9]  
+    send packet with size = 2
+@ send 4 pulses at gpio[10]  
+    send packet with size = 3
+@ send 4 pulses at gpio[11]  
+    send packet with size = 4
+@ send 4 pulses at gpio[12]  
+    send packet with size = 5
+@ send 4 pulses at gpio[13]  
+    send packet with size = 6
+
+
 @ start sending on the higest gpios 
     send packet with size = 1
 @ send 4 pulses at gpio[37]  
@@ -92,6 +106,24 @@ void set_registers() {
     send packet with size = 8
 @ send 4 pulses at gpio[30]  
     send packet with size = 9
+
+@ reset pulses
+    send packet with size = 1
+@ send 4 pulses at gpio[28]  
+    send packet with size = 2
+@ send 4 pulses at gpio[27]  
+    send packet with size = 3
+@ send 4 pulses at gpio[26]  
+    send packet with size = 4
+@ send 4 pulses at gpio[25]  
+    send packet with size = 5
+@ send 4 pulses at gpio[24]  
+    send packet with size = 6
+@ send 4 pulses at gpio[23]  
+    send packet with size = 7
+@ send 4 pulses at gpio[22]  
+    send packet with size = 8
+
 @ test finish 
     send packet with size = 7
     send packet with size = 7
@@ -110,7 +142,7 @@ void main()
     gpio_config_io();
     send_packet(1); // configuration finished
 
-    for (j=0;j<13;j++){
+    for (j=0;j<9;j++){
         send_packet(j+2); // send 4 pulses at gpio[j]
         for (i = 0; i < num_pulses; i++){
             reg_mprj_datal = 0x1 << j;
@@ -120,8 +152,19 @@ void main()
         }
     }
 
+    send_packet(1); // reset counter
+    for (j=9;j<14;j++){
+        send_packet(9-j+2); // send 4 pulses at gpio[j]
+        for (i = 0; i < num_pulses; i++){
+            reg_mprj_datal = 0x1 << j;
+            count_down(PULSE_WIDTH);  
+            reg_mprj_datal = 0x0;  
+            count_down(PULSE_WIDTH);  
+        }
+    }
+
     send_packet(1); //start sending on the higest gpios
-    for (j=37;j > 21;j--){
+    for (j=37;j > 28;j--){
         send_packet(37-j+2); // send 4 pulses at gpio[j]
         if (j>=32){
             for (i = 0; i < num_pulses; i++){
@@ -139,5 +182,20 @@ void main()
             }
         }
     }
+    send_packet(1); // reset counter
+    for (j=28;j > 21;j--){
+        send_packet(28-j+2); // send 4 pulses at gpio[j]
+        for (i = 0; i < num_pulses; i++){
+            reg_mprj_datal = 0x1 << j;
+            count_down(PULSE_WIDTH);  
+            reg_mprj_datal = 0x0;  
+            count_down(PULSE_WIDTH);  
+        }
+
+    }
+
+    send_packet(7); // finish test
+    send_packet(7); // finish test
+    send_packet(7); // finish test
 }
 
