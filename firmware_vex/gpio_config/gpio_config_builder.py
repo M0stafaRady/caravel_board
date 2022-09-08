@@ -56,9 +56,8 @@ for i,violation in enumerate(arg_gpio_h):
         print (f"incorrect violation type inside provided argument gpio_h {args.gpio_h} it has to be H_NONE or H_INDEPENDENT or H_DEPENDENT")
         sys.exit()
     gpio_h.append([f'IO[{37-i}]',violation_type])
-print(f"gpio_h {gpio_h}")
 del gpio_h[args.num_io:]
-print(f"gpio_l {gpio_h}")
+print(f"gpio_h {gpio_h}")
 arg_gpio_l = args.gpio_l
 arg_gpio_l = arg_gpio_l.replace('[','').replace(']','')
 arg_gpio_l = arg_gpio_l.split(',')
@@ -72,6 +71,8 @@ for i,violation in enumerate(arg_gpio_l):
         sys.exit()
     gpio_l.append([f'IO[{i}]',violation_type])
 del gpio_l[args.num_io:]
+print(f"gpio_l {gpio_l}")
+
 
 
 
