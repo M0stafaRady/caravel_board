@@ -154,7 +154,7 @@ void main()
 
     send_packet(1); // reset counter
     for (j=9;j<14;j++){
-        send_packet(9-j+2); // send 4 pulses at gpio[j]
+        send_packet(j-9+2); // send 4 pulses at gpio[j]
         for (i = 0; i < num_pulses; i++){
             reg_mprj_datal = 0x1 << j;
             count_down(PULSE_WIDTH);  
