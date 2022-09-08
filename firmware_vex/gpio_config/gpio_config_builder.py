@@ -21,12 +21,12 @@ from gpio_config_def import NUM_IO, C_MGMT_IN, C_MGMT_OUT, C_USER_BIDIR, C_DISAB
 import argparse
 import sys
 
-
 parser = argparse.ArgumentParser(description='provide gpio types')
 parser.add_argument('-gpio_h','-hi', help='provide gpio_h array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
 parser.add_argument('-gpio_l','-l', help='provide gpio_l array with H_NONE or H_INDEPENDENT or H_DEPENDENT (None, Independent and dependent)')
 parser.add_argument('-num_io','-n', type=int, help='number of ios to work with')
 parser.add_argument('-config','-c', help='configuration types for now all gpios have the same gpio config C_MGMT_OUT C_MGMT_IN')
+parser.add_argument('-debug','-d',action='store_true', help='enable debug prints')
 args = parser.parse_args()
 if any(v is  None for v in [args.gpio_h, args.gpio_l,args.num_io,args.config]):
     print("fatal: you have to provide both -gpio_h and -gpio_l -args.num_io -args.config")
@@ -57,7 +57,8 @@ for i,violation in enumerate(arg_gpio_h):
         sys.exit()
     gpio_h.append([f'IO[{37-i}]',violation_type])
 del gpio_h[args.num_io:]
-print(f"gpio_h {gpio_h}")
+if (args.debug):
+    print(f"gpio_h {gpio_h}")
 arg_gpio_l = args.gpio_l
 arg_gpio_l = arg_gpio_l.replace('[','').replace(']','')
 arg_gpio_l = arg_gpio_l.split(',')
@@ -71,7 +72,8 @@ for i,violation in enumerate(arg_gpio_l):
         sys.exit()
     gpio_l.append([f'IO[{i}]',violation_type])
 del gpio_l[args.num_io:]
-print(f"gpio_l {gpio_l}")
+if (args.debug):
+    print(f"gpio_l {gpio_l}")
 
 
 
