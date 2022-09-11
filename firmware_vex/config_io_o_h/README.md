@@ -45,7 +45,7 @@
         send packet with size = 11
 
     @ test finish 
-        send packet with size = 7
-        send packet with size = 7
-        send packet with size = 7   
+        send packet with size = 1
+        send packet with size = 1
+        send packet with size = 1   
 
