@@ -101,9 +101,9 @@ void set_registers() {
     send packet with size = 11
 
 @ test finish 
-    send packet with size = 7
-    send packet with size = 7
-    send packet with size = 7
+    send packet with size = 1
+    send packet with size = 1
+    send packet with size = 1
 
 
 */
@@ -140,6 +140,9 @@ void main()
         }
     }
 
+    send_packet(1); // finish test
+    send_packet(1); // finish test
+    send_packet(1); // finish test
 
 }
 

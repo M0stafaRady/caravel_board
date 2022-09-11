@@ -43,3 +43,7 @@
         send packet with size = 10
     @ send 4 pulses at gpio[18]  
         send packet with size = 11
+    @ test finish 
+        send packet with size = 1
+        send packet with size = 1
+        send packet with size = 1   
