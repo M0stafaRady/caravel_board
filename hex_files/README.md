@@ -309,7 +309,7 @@
         send packet size = 3 
         send packet size = 3  
 
-## mem_dff/sram_test
+## mem_dff_test/mem_sram_test
 
    @ start of test 
       send packet with size = 1
